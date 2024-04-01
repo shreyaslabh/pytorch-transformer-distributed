@@ -33,7 +33,7 @@ Login on each machine and perform the following operations:
       3. `DRIVE_USERNAME` with the username of the network drive
    5. `sudo mount -t cifs //NETWORD_DRIVE_IP/NETWORK_SHARE_NAME /mnt/training-data -o uid=1000,gid=1000,rw,user,username=NETWORK_DRIVE_USERNAME`
       1. Type the drive's password when prompted
-7. `git clone https://github.com/hkproj/pytorch-transformer-distributed`
+7. `git clone https://github.com/shreyaslabh/pytorch-transformer-distributed`
 8. `cd pytorch-transformer-distributed`
 9. `pip install -r requirements.txt`
 10. Login on Weights & Biases
