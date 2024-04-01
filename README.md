@@ -17,29 +17,19 @@ Make sure to create everything in the same region. I used `East Coast (NY2)`.
 Login on each machine and perform the following operations:
 
 1. `sudo apt-get update`
-2. `sudo apt-get install net-tools`
-3. If you get an error about `seahorse` while installing `net-tools`, do the following:
-   1. sudo rm /var/lib/dpkg/info/seahorse.list
-   2. sudo apt-get install seahorse --reinstall
-4. Get each machine's private IP address using `ifconfig`
-5. Add IP and hostname mapping of all the slave nodes on `/etc/hosts` file of the master node
-6. Mount the network drive
-   1. `sudo apt-get install smbclient`
-   2. `sudo apt-get install cifs-utils`
-   3. `sudo mkdir /mnt/training-data`
-   4. Replace the following values on the command below:
-      1. `NETWORD_DRIVE_IP` with the IP address of the network drive
-      2. `NETWORK_SHARE_NAME` with the name of the network share
-      3. `DRIVE_USERNAME` with the username of the network drive
-   5. `sudo mount -t cifs //NETWORD_DRIVE_IP/NETWORK_SHARE_NAME /mnt/training-data -o uid=1000,gid=1000,rw,user,username=NETWORK_DRIVE_USERNAME`
-      1. Type the drive's password when prompted
-7. `git clone https://github.com/shreyaslabh/pytorch-transformer-distributed`
-8. `cd pytorch-transformer-distributed`
-9. `pip install -r requirements.txt`
-10. Login on Weights & Biases
-    1. `wandb login`
-    2. Copy the API key from the browser and paste it on the terminal
-11. Run the training command from below
+2. `sudo apt-get install net-tools smbclient cifs-utils`
+3. Mount the network drive
+   1. `sudo mkdir /mnt/training-data`
+   2. `sudo mount -t cifs //NETWORD_DRIVE_IP/NETWORK_SHARE_NAME /mnt/training-data -o uid=1000,gid=1000,rw,user,username=NETWORK_DRIVE_USERNAME`
+4. `git clone https://github.com/shreyaslabh/pytorch-transformer-distributed`
+5. `cd pytorch-transformer-distributed`
+6. `pip install -r requirements.txt`
+7. Login on Weights & Biases: `wandb login`   
+8. Add ip & hostname in each other's /etc/hosts file
+    1. ifconfig
+    2. hostname
+    3. sudo nano /etc/hosts
+9. Run the training command from below
 
 ### Local training
 
