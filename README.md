@@ -51,12 +51,21 @@ Login to Weights & Biases to monitor the training progress: https://app.wandb.ai
 ## FSDP
 
 sudo apt-get update
+
 sudo apt-get install net-tools smbclient cifs-utils
+
 ifconfig
+
 hostname
+
 nano /etc/hosts
+
 git clone https://github.com/shreyaslabh/pytorch-transformer-distributed
+
 cd pytorch-transformer-distributed/FSDP
+
 pip install -r requirements.txt
+
 sh download_dataset.sh
+
 torchrun --nnodes=1 --nproc_per_node=2  T5_training.py
