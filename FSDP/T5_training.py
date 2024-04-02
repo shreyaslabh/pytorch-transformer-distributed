@@ -29,7 +29,7 @@ from functools import partial
 from torch.utils.data import DataLoader
 from pathlib import Path
 from summarization_dataset import *
-import policies
+# import policies
 import model_checkpointing
 from configs import fsdp_config, train_config
 from utils import (bfloat_support, setup,
@@ -43,33 +43,33 @@ import tqdm
 from datetime import datetime
 
 
-def get_policies(cfg, rank):
+# def get_policies(cfg, rank):
 
-    """establish current policies for mixed precision and fsdp wrapping"""
+#     """establish current policies for mixed precision and fsdp wrapping"""
 
-    mixed_precision_policy = None
-    wrapping_policy = None
+#     mixed_precision_policy = None
+#     wrapping_policy = None
 
-    # mixed precision -----
-    if cfg.mixed_precision:
-        bfloat_available = bfloat_support()
-        if bfloat_available and not cfg.use_fp16:
-            mixed_precision_policy = policies.bfSixteen
-            if rank == 0:
-                print(f"bFloat16 enabled for mixed precision - using bfSixteen policy")
-        elif cfg.use_fp16:
-            mixed_precision_policy = policies.fpSixteen
-            if rank == 0:
-                print(f"FP16 enabled. ")
-        else:
-            # mixed_precision_policy = policies.fpSixteen
-            print(
-                f"bFloat16 support not present. Will use FP32, and not mixed precision"
-            )
+#     # mixed precision -----
+#     if cfg.mixed_precision:
+#         bfloat_available = bfloat_support()
+#         if bfloat_available and not cfg.use_fp16:
+#             mixed_precision_policy = policies.bfSixteen
+#             if rank == 0:
+#                 print(f"bFloat16 enabled for mixed precision - using bfSixteen policy")
+#         elif cfg.use_fp16:
+#             mixed_precision_policy = policies.fpSixteen
+#             if rank == 0:
+#                 print(f"FP16 enabled. ")
+#         else:
+#             # mixed_precision_policy = policies.fpSixteen
+#             print(
+#                 f"bFloat16 support not present. Will use FP32, and not mixed precision"
+#             )
 
-    wrapping_policy = policies.get_t5_wrapper()
+#     wrapping_policy = policies.get_t5_wrapper()
 
-    return mixed_precision_policy, wrapping_policy
+#     return mixed_precision_policy, wrapping_policy
 
 
 def fsdp_main(args):
@@ -111,18 +111,20 @@ def fsdp_main(args):
     torch.cuda.set_device(local_rank)
     
     # Set up FSDP parameters
-    mixed_precision_policy, t5_auto_wrap_policy = get_policies(train_config, rank)
+    # mixed_precision_policy, t5_auto_wrap_policy = get_policies(train_config, rank)
+
+    # from torch.distributed.fsdp import 
+    
+
     
     # Apply FSDP wrapping to the model
     model = FSDP(model,
-        auto_wrap_policy=t5_auto_wrap_policy,
-        mixed_precision=mixed_precision_policy,
         sharding_strategy=fsdp_config.sharding_strategy,
         device_id=torch.cuda.current_device(),
         limit_all_gathers=fsdp_config.limit_all_gathers)
     
-    if fsdp_config.fsdp_activation_checkpointing:
-        policies.apply_fsdp_checkpointing(model)
+    # if fsdp_config.fsdp_activation_checkpointing:
+    #     policies.apply_fsdp_checkpointing(model)
 
     # Set up optimizer and scheduler
     optimizer = optim.AdamW(model.parameters(), lr=train_config.lr)
