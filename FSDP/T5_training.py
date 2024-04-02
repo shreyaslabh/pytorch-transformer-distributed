@@ -30,7 +30,7 @@ from torch.utils.data import DataLoader
 from pathlib import Path
 from summarization_dataset import *
 # import policies
-import model_checkpointing
+# import model_checkpointing
 from configs import fsdp_config, train_config
 from utils import (bfloat_support, setup,
                    cleanup, get_date_of_run,
@@ -170,20 +170,20 @@ def fsdp_main(args):
                     format_metrics_to_gb(torch.cuda.memory_reserved())
                 )
 
-        if train_config.save_model and curr_val_loss < best_val_loss:
+        # if train_config.save_model and curr_val_loss < best_val_loss:
             
-            if fsdp_config.checkpoint_type == StateDictType.FULL_STATE_DICT:
-                model_checkpointing.save_model_checkpoint(
-                    model, optimizer, rank, fsdp_config, epoch=1
-                )
-            elif fsdp_config.checkpoint_type == StateDictType.SHARDED_STATE_DICT:
-                model_checkpointing.save_model_and_optimizer_sharded(model, rank, fsdp_config)
-                if fsdp_config.save_optimizer:
-                    model_checkpointing.save_model_and_optimizer_sharded(model, rank, fsdp_config, optim=optimizer)
+        #     if fsdp_config.checkpoint_type == StateDictType.FULL_STATE_DICT:
+        #         model_checkpointing.save_model_checkpoint(
+        #             model, optimizer, rank, fsdp_config, epoch=1
+        #         )
+        #     elif fsdp_config.checkpoint_type == StateDictType.SHARDED_STATE_DICT:
+        #         model_checkpointing.save_model_and_optimizer_sharded(model, rank, fsdp_config)
+        #         if fsdp_config.save_optimizer:
+        #             model_checkpointing.save_model_and_optimizer_sharded(model, rank, fsdp_config, optim=optimizer)
 
-            if fsdp_config.save_optimizer:
-                model_checkpointing.save_optimizer_checkpoint(
-                    model, optimizer, rank, fsdp_config, epoch=1
+        #     if fsdp_config.save_optimizer:
+        #         model_checkpointing.save_optimizer_checkpoint(
+        #             model, optimizer, rank, fsdp_config, epoch=1
                 )           
         if curr_val_loss < best_val_loss:
 
