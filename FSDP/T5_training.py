@@ -122,7 +122,7 @@ def fsdp_main(args):
         sharding_strategy=fsdp_config.sharding_strategy,
         device_id=torch.cuda.current_device(),
         limit_all_gathers=fsdp_config.limit_all_gathers)
-    
+    print("Model Ready")
     # if fsdp_config.fsdp_activation_checkpointing:
     #     policies.apply_fsdp_checkpointing(model)
 
@@ -146,6 +146,7 @@ def fsdp_main(args):
         mem_reserved_tracker = []
 
     for epoch in range(1, args.epochs + 1):
+        print(f"Epoch = {epoch}/{args.epochs}")
         t0 = time.time()
         train_accuracy = train(args, model, rank, world_size, train_loader, optimizer, epoch, sampler=sampler1)
         if args.run_validation:
@@ -184,7 +185,7 @@ def fsdp_main(args):
         #     if fsdp_config.save_optimizer:
         #         model_checkpointing.save_optimizer_checkpoint(
         #             model, optimizer, rank, fsdp_config, epoch=1
-                )           
+                # )           
         if curr_val_loss < best_val_loss:
 
             best_val_loss = curr_val_loss
