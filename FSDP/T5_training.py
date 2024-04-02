@@ -120,8 +120,7 @@ def fsdp_main(args):
     # Apply FSDP wrapping to the model
     model = FSDP(model,
         sharding_strategy=fsdp_config.sharding_strategy,
-        device_id=torch.cuda.current_device(),
-        limit_all_gathers=fsdp_config.limit_all_gathers)
+        device_id=torch.cuda.current_device())
     print("Model Ready")
     # if fsdp_config.fsdp_activation_checkpointing:
     #     policies.apply_fsdp_checkpointing(model)
