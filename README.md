@@ -2,6 +2,7 @@
 
 Distributed training of an attention model. Forked from: [hkproj/pytorch-transformer](https://github.com/hkproj/pytorch-transformer)
 
+# DDP
 ## Instructions for Paperspace
 
 ### Machines
@@ -48,7 +49,7 @@ Run the following command on each machine (replace `IP_ADDR_MASTER_NODE` with th
 Login to Weights & Biases to monitor the training progress: https://app.wandb.ai/
 
 
-## FSDP
+# FSDP
 
 sudo apt-get update
 
